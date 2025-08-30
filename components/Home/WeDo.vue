@@ -9,80 +9,57 @@
               The service we offer is specifically designed to meet your needs.
             </h3>
           </div>
-          <!-- /column -->
         </div>
-        <!-- /.row -->
+
         <div
           class="row gx-lg-8 gx-xl-12 gy-11 px-xxl-5 text-center d-flex align-items-end"
         >
-          <div class="col-lg-4">
+          <div
+            class="col-lg-4"
+            v-for="(service, index) in services"
+            :key="index"
+          >
             <div class="px-md-15 px-lg-3">
               <figure class="mb-6">
                 <img
                   class="img-fluid"
-                  src="/images/i24.png"
-                  srcset="/images/i24@2x.png 2x"
-                  alt=""
+                  :src="service.img"
+                  :srcset="`${service.img2x} 2x`"
+                  :alt="service.title"
                 />
               </figure>
-              <h3>Web Design</h3>
-              <p class="mb-2">
-                Nulla vitae elit libero, a pharetra augue. Donec id elit non mi
-                porta gravida at eget. Fusce dapibus tellus.
-              </p>
-              <a href="#" class="more hover">Learn More</a>
+              <h3>{{ service.title }}</h3>
+              <p class="mb-2">{{ service.desc }}</p>
+              <a :href="service.link" class="more hover">Learn More</a>
             </div>
-            <!--/.px -->
           </div>
-          <!--/column -->
-          <div class="col-lg-4">
-            <div class="px-md-15 px-lg-3">
-              <figure class="mb-6">
-                <img
-                  class="img-fluid"
-                  src="/images/i19.png"
-                  srcset="/images/i19@2x.png 2x"
-                  alt=""
-                />
-              </figure>
-              <h3>Graphic Design</h3>
-              <p class="mb-2">
-                Maecenas faucibus mollis interdum. Vivamus sagittis lacus vel
-                augue laoreet. Sed posuere consectetur.
-              </p>
-              <a href="#" class="more hover">Learn More</a>
-            </div>
-            <!--/.px -->
-          </div>
-          <!--/column -->
-          <div class="col-lg-4">
-            <div class="px-md-15 px-lg-3">
-              <figure class="mb-6">
-                <img
-                  class="img-fluid"
-                  src="/images/i18.png"
-                  srcset="/images/i18@2x.png 2x"
-                  alt=""
-                />
-              </figure>
-              <h3>3D Animation</h3>
-              <p class="mb-2">
-                Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                Praesent commodo cursus magna scelerisque.
-              </p>
-              <a href="#" class="more hover">Learn More</a>
-            </div>
-            <!--/.px -->
-          </div>
-          <!--/column -->
         </div>
-        <!--/.row -->
       </div>
-      <!-- /.container -->
     </section>
   </div>
 </template>
-<script>
-export default {};
+<script setup>
+const services = [
+  {
+    img: "/images/i24.png",
+    img2x: "/images/i24@2x.png",
+    title: "Web Design",
+    desc: "Nulla vitae elit libero, a pharetra augue. Donec id elit non mi porta gravida at eget. Fusce dapibus tellus.",
+    link: "#",
+  },
+  {
+    img: "/images/i19.png",
+    img2x: "/images/i19@2x.png",
+    title: "Graphic Design",
+    desc: "Maecenas faucibus mollis interdum. Vivamus sagittis lacus vel augue laoreet. Sed posuere consectetur.",
+    link: "#",
+  },
+  {
+    img: "/images/i18.png",
+    img2x: "/images/i18@2x.png",
+    title: "3D Animation",
+    desc: "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna scelerisque.",
+    link: "#",
+  },
+];
 </script>
-<style lang=""></style>

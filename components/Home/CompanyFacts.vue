@@ -57,110 +57,34 @@
         </div>
         <!-- /.row -->
         <div class="row grid-view gy-6 gy-xl-0">
-          <div class="col-md-6 col-xl-3">
+          <div
+            v-for="(member, index) in teamMembers"
+            :key="index"
+            class="col-md-6 col-xl-3"
+          >
             <div class="card shadow-lg">
               <div class="card-body">
                 <img
                   class="rounded-circle w-15 mb-4"
-                  src="/images/te1.jpg"
-                  srcset="/images/te1@2x.jpg 2x"
-                  alt=""
+                  :src="member.image"
+                  :srcset="`${member.image2x} 2x`"
+                  :alt="member.name"
                 />
-                <h4 class="mb-1">Coriss Ambady</h4>
-                <div class="meta mb-2">Financial Analyst</div>
-                <p class="mb-2">
-                  Fermentum massa justo sit amet risus morbi leo.
-                </p>
+                <h4 class="mb-1">{{ member.name }}</h4>
+                <div class="meta mb-2">{{ member.role }}</div>
+                <p class="mb-2">{{ member.desc }}</p>
                 <nav class="nav social mb-0">
-                  <a href="#"><i class="uil uil-twitter"></i></a>
-                  <a href="#"><i class="uil uil-facebook-f"></i></a>
-                  <a href="#"><i class="uil uil-dribbble"></i></a>
+                  <a
+                    v-for="(social, i) in member.socials"
+                    :key="i"
+                    :href="social.link"
+                  >
+                    <i :class="social.icon"></i>
+                  </a>
                 </nav>
-                <!-- /.social -->
               </div>
-              <!--/.card-body -->
             </div>
-            <!-- /.card -->
           </div>
-          <!--/column -->
-          <div class="col-md-6 col-xl-3">
-            <div class="card shadow-lg">
-              <div class="card-body">
-                <img
-                  class="rounded-circle w-15 mb-4"
-                  src="/images/te2.jpg"
-                  srcset="/images/te2@2x.jpg 2x"
-                  alt=""
-                />
-                <h4 class="mb-1">Cory Zamora</h4>
-                <div class="meta mb-2">Marketing Specialist</div>
-                <p class="mb-2">
-                  Fermentum massa justo sit amet risus morbi leo.
-                </p>
-                <nav class="nav social mb-0">
-                  <a href="#"><i class="uil uil-twitter"></i></a>
-                  <a href="#"><i class="uil uil-facebook-f"></i></a>
-                  <a href="#"><i class="uil uil-dribbble"></i></a>
-                </nav>
-                <!-- /.social -->
-              </div>
-              <!--/.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!--/column -->
-          <div class="col-md-6 col-xl-3">
-            <div class="card shadow-lg">
-              <div class="card-body">
-                <img
-                  class="rounded-circle w-15 mb-4"
-                  src="/images/te3.jpg"
-                  srcset="/images/te3@2x.jpg 2x"
-                  alt=""
-                />
-                <h4 class="mb-1">Nikolas Brooten</h4>
-                <div class="meta mb-2">Sales Manager</div>
-                <p class="mb-2">
-                  Fermentum massa justo sit amet risus morbi leo.
-                </p>
-                <nav class="nav social mb-0">
-                  <a href="#"><i class="uil uil-twitter"></i></a>
-                  <a href="#"><i class="uil uil-facebook-f"></i></a>
-                  <a href="#"><i class="uil uil-dribbble"></i></a>
-                </nav>
-                <!-- /.social -->
-              </div>
-              <!--/.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!--/column -->
-          <div class="col-md-6 col-xl-3">
-            <div class="card shadow-lg">
-              <div class="card-body">
-                <img
-                  class="rounded-circle w-15 mb-4"
-                  src="/images/te4.jpg"
-                  srcset="/images/te4@2x.jpg 2x"
-                  alt=""
-                />
-                <h4 class="mb-1">Jackie Sanders</h4>
-                <div class="meta mb-2">Investment Planner</div>
-                <p class="mb-2">
-                  Fermentum massa justo sit amet risus morbi leo.
-                </p>
-                <nav class="nav social mb-0">
-                  <a href="#"><i class="uil uil-twitter"></i></a>
-                  <a href="#"><i class="uil uil-facebook-f"></i></a>
-                  <a href="#"><i class="uil uil-dribbble"></i></a>
-                </nav>
-                <!-- /.social -->
-              </div>
-              <!--/.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!--/column -->
         </div>
         <!--/.row -->
       </div>
@@ -361,7 +285,56 @@
     </section>
   </div>
 </template>
-<script>
-export default {};
+<script setup>
+const teamMembers = [
+  {
+    name: "Coriss Ambady",
+    role: "Financial Analyst",
+    image: "/images/te1.jpg",
+    image2x: "/images/te1@2x.jpg",
+    desc: "Fermentum massa justo sit amet risus morbi leo.",
+    socials: [
+      { icon: "uil uil-twitter", link: "#" },
+      { icon: "uil uil-facebook-f", link: "#" },
+      { icon: "uil uil-dribbble", link: "#" },
+    ],
+  },
+  {
+    name: "Cory Zamora",
+    role: "Marketing Specialist",
+    image: "/images/te2.jpg",
+    image2x: "/images/te2@2x.jpg",
+    desc: "Fermentum massa justo sit amet risus morbi leo.",
+    socials: [
+      { icon: "uil uil-twitter", link: "#" },
+      { icon: "uil uil-facebook-f", link: "#" },
+      { icon: "uil uil-dribbble", link: "#" },
+    ],
+  },
+  {
+    name: "Nikolas Brooten",
+    role: "Sales Manager",
+    image: "/images/te3.jpg",
+    image2x: "/images/te3@2x.jpg",
+    desc: "Fermentum massa justo sit amet risus morbi leo.",
+    socials: [
+      { icon: "uil uil-twitter", link: "#" },
+      { icon: "uil uil-facebook-f", link: "#" },
+      { icon: "uil uil-dribbble", link: "#" },
+    ],
+  },
+  {
+    name: "Jackie Sanders",
+    role: "Investment Planner",
+    image: "/images/te4.jpg",
+    image2x: "/images/te4@2x.jpg",
+    desc: "Fermentum massa justo sit amet risus morbi leo.",
+    socials: [
+      { icon: "uil uil-twitter", link: "#" },
+      { icon: "uil uil-facebook-f", link: "#" },
+      { icon: "uil uil-dribbble", link: "#" },
+    ],
+  },
+];
 </script>
 <style lang=""></style>

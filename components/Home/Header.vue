@@ -15,15 +15,17 @@
               />
             </figure>
           </div>
-          <!-- /column -->
           <div
             class="col-md-10 offset-md-1 offset-lg-0 col-lg-5 text-center text-lg-start"
           >
             <h1 class="display-1 fs-54 mb-5 mx-md-n5 mx-lg-0 mt-7">
               A digital agency <br class="d-md-none" />specializing on
-              <br class="d-md-none" /><span class="rotator-fade text-primary"
-                >mobile design,web design,3D animation</span
-              >
+              <br class="d-md-none" />
+              <ui-text-rotator
+                :texts="['mobile design', 'web design', '3D animation']"
+                className="text-primary"
+                :interval="2500"
+              />
             </h1>
             <p class="lead fs-lg mb-7">
               We are an award winning design agency that strongly believes in
@@ -35,68 +37,22 @@
               ></span
             >
           </div>
-          <!-- /column -->
         </div>
-        <!-- /.row -->
         <p class="text-center mb-8">
           Trusted by over 2K+ clients across the world
         </p>
         <div
           class="row row-cols-4 row-cols-md-4 row-cols-lg-7 row-cols-xl-7 gy-10 mb-2 d-flex align-items-center justify-content-center"
         >
-          <div class="col">
+          <div class="col" v-for="(img, index) in images" :key="index">
             <img
               class="img-fluid px-md-3 px-lg-0 px-xl-2 px-xxl-5"
-              src="/images/c1.png"
-              alt=""
-            />
-          </div>
-          <div class="col">
-            <img
-              class="img-fluid px-md-3 px-lg-0 px-xl-2 px-xxl-5"
-              src="/images/c2.png"
-              alt=""
-            />
-          </div>
-          <div class="col">
-            <img
-              class="img-fluid px-md-3 px-lg-0 px-xl-2 px-xxl-5"
-              src="/images/c3.png"
-              alt=""
-            />
-          </div>
-          <div class="col">
-            <img
-              class="img-fluid px-md-3 px-lg-0 px-xl-2 px-xxl-5"
-              src="/images/c4.png"
-              alt=""
-            />
-          </div>
-          <div class="col">
-            <img
-              class="img-fluid px-md-3 px-lg-0 px-xl-2 px-xxl-5"
-              src="/images/c5.png"
-              alt=""
-            />
-          </div>
-          <div class="col">
-            <img
-              class="img-fluid px-md-3 px-lg-0 px-xl-2 px-xxl-5"
-              src="/images/c6.png"
-              alt=""
-            />
-          </div>
-          <div class="col">
-            <img
-              class="img-fluid px-md-3 px-lg-0 px-xl-2 px-xxl-5"
-              src="/images/c7.png"
-              alt=""
+              :src="`/images/${img}`"
+              :alt="`Logo ${index + 1}`"
             />
           </div>
         </div>
-        <!-- /.row -->
       </div>
-      <!-- /.container -->
       <div class="overflow-hidden">
         <div class="divider text-soft-primary mx-n2">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
@@ -107,11 +63,17 @@
           </svg>
         </div>
       </div>
-      <!-- /.overflow-hidden -->
     </section>
   </div>
 </template>
-<script>
-export default {};
+<script setup>
+const images = [
+  "c1.png",
+  "c2.png",
+  "c3.png",
+  "c4.png",
+  "c5.png",
+  "c6.png",
+  "c7.png",
+];
 </script>
-<style lang=""></style>
