@@ -41,6 +41,12 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      link: [
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&family=Roboto:wght@400;700&display=swap",
+        },
+      ],
       script: [
         {
           src: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js",
