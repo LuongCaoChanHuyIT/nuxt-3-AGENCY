@@ -34477,7 +34477,7 @@ img.svg-inject {
 .ratings-wrapper span.ratings {
   vertical-align: -1px;
 }
-@font-face {
+/* @font-face {
   font-family: Unicons;
   src: url(../fonts/unicons/Unicons.woff2) format("woff2"),
     url(../fonts/unicons/Unicons.woff) format("woff");
@@ -34492,7 +34492,7 @@ img.svg-inject {
   font-weight: 400;
   font-style: normal;
   font-display: block;
-}
+} */
 [class*=" icn-"],
 [class*=" uil-"],
 [class^="icn-"],
@@ -40523,4 +40523,3 @@ footer.bg-dark.angled.upper-start:before {
     position: relative;
   }
 }
-/*# sourceMappingURL=style.css.map */
