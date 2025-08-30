@@ -6,6 +6,10 @@ export default defineNuxtConfig({
     "bootstrap/dist/css/bootstrap.min.css",
     "~/public/style.css",
     "bootstrap-icons/font/bootstrap-icons.css",
+    "~/public/css/style.css",
+    "~/public/css/plugins.css",
+    "~/public/css/sky.css",
+    "~/public/css/urbanist.css",
   ],
   plugins: [{ src: "~/plugins/bootstrap.client.ts", mode: "client" }],
   modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
@@ -42,6 +46,15 @@ export default defineNuxtConfig({
         {
           src: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js",
           tagPosition: "bodyClose",
+        },
+        {
+          src: "/js/email.js",
+        },
+        {
+          src: "/js/plugins.js",
+        },
+        {
+          src: "/js/theme.js",
         },
       ],
     },
