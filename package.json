@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@iconscout/unicons": "^4.2.0",
     "@nuxtjs/i18n": "^10.0.6",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@pinia/nuxt": "^0.11.2",
@@ -21,8 +22,10 @@
     "emailjs-com": "^3.2.0",
     "nuxt": "^3.18.1",
     "pinia": "^3.0.3",
+    "swiper": "^11.2.10",
     "vue": "^3.5.20",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue3-swiper": "^1.0.0"
   },
   "devDependencies": {
     "@nuxtjs/google-fonts": "^3.2.0",

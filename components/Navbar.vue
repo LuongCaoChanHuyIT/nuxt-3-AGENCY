@@ -303,41 +303,43 @@
   </header>
 </template>
 <script setup>
-import { onMounted, watch, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { useHomepageStore } from "~/stores/useItemStore";
 
 const itemStore = useHomepageStore();
-const demos = useState("demos", () => []);
-const pages = useState("pages", () => []);
-const projects = useState("projects", () => []);
-const blogs = useState("blogs", () => []);
-const blocks = useState("blocks", () => []);
-const documentation = useState("documentation", () => []);
-const docGroup = computed(() => groupByKey(documentation.value, "description"));
 const data = useState("homepage_items", () => []);
+
 onMounted(async () => {
-  const res = await itemStore.fetchItemsSection("homepage_items", 1, true);
+  const res = await itemStore.fetchItemsSection("homepage_items", 1);
   data.value = res;
 });
 
-watch(
-  () => data.value,
-  (newVal) => {
-    demos.value = newVal.filter((item) => item.title === "Demos");
-    pages.value = newVal.filter((item) => item.title === "Pages");
-    projects.value = newVal.filter((item) => item.title === "Projects");
-    blogs.value = newVal.filter((item) => item.title === "Blog");
-    blocks.value = newVal.filter((item) => item.title === "Blocks");
-    documentation.value = newVal.filter(
-      (item) => item.title === "Documentation"
-    );
-  },
-  { immediate: true }
+const demos = computed(() =>
+  data.value.filter((item) => item.title === "Demos")
+);
+const pages = computed(() =>
+  data.value.filter((item) => item.title === "Pages")
+);
+const projects = computed(() =>
+  data.value.filter((item) => item.title === "Projects")
+);
+const blogs = computed(() =>
+  data.value.filter((item) => item.title === "Blog")
+);
+const blocks = computed(() =>
+  data.value.filter((item) => item.title === "Blocks")
+);
+const documentation = computed(() =>
+  data.value.filter((item) => item.title === "Documentation")
 );
 
-const groupByKey = (data, key) => {
+const docGroup = computed(() => groupByKey(documentation.value, "description"));
+
+// Hàm group chung
+const groupByKey = (arr, key) => {
+  if (!arr || !arr.length) return [];
   return Object.values(
-    data.reduce((acc, item) => {
+    arr.reduce((acc, item) => {
       const groupKey = item[key] ?? "Unknown";
       if (!acc[groupKey]) {
         acc[groupKey] = {

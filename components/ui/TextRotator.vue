@@ -22,7 +22,7 @@ onMounted(() => {
 
 <template>
   <span :class="className">
-    <br />
+    <!-- <br /> -->
 
     <Transition
       enter-active-class="animate__animated animate__fadeIn"

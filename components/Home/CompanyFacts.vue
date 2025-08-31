@@ -104,170 +104,44 @@
             <!-- /column -->
           </div>
           <!-- /.row -->
-          <div
-            class="swiper-container grid-view nav-bottom nav-color mb-14"
-            data-margin="30"
-            data-dots="false"
-            data-nav="true"
-            data-items-md="2"
-            data-items-xs="1"
-          >
-            <div class="swiper overflow-visible">
+          <div class="swiper-container grid-view nav-bottom nav-color mb-14">
+            <div ref="swiperRef" class="swiper overflow-visible">
               <div class="swiper-wrapper">
-                <div class="swiper-slide">
+                <div
+                  v-for="(project, index) in projects"
+                  :key="index"
+                  class="swiper-slide"
+                >
                   <figure class="rounded mb-7">
-                    <a href="./single-project.html"
-                      ><img
-                        src="/images/sp1.jpg"
-                        srcset="/images/sp1@2x.jpg 2x"
+                    <a :href="project.link">
+                      <img
+                        :src="project.img"
+                        :srcset="`${project.img2x} 2x`"
                         alt=""
-                    /></a>
+                      />
+                    </a>
                   </figure>
                   <div
                     class="project-details d-flex justify-content-center flex-column"
                   >
                     <div class="post-header">
                       <h2 class="post-title h3">
-                        <a href="./single-project.html" class="link-dark"
-                          >Cras Fermentum Sem</a
-                        >
+                        <a :href="project.link" class="link-dark">{{
+                          project.title
+                        }}</a>
                       </h2>
-                      <div class="post-category text-ash">Mobile Design</div>
+                      <div class="post-category text-ash">
+                        {{ project.category }}
+                      </div>
                     </div>
-                    <!-- /.post-header -->
                   </div>
-                  <!-- /.project-details -->
                 </div>
-                <!--/.swiper-slide -->
-                <div class="swiper-slide">
-                  <figure class="rounded mb-7">
-                    <a href="./single-project.html"
-                      ><img
-                        src="/images/sp2.jpg"
-                        srcset="/images/sp2@2x.jpg 2x"
-                        alt=""
-                    /></a>
-                  </figure>
-                  <div
-                    class="project-details d-flex justify-content-center flex-column"
-                  >
-                    <div class="post-header">
-                      <h2 class="post-title h3">
-                        <a href="./single-project.html" class="link-dark"
-                          >Venenatis Euismod Vehicula</a
-                        >
-                      </h2>
-                      <div class="post-category text-ash">Web Design</div>
-                    </div>
-                    <!-- /.post-header -->
-                  </div>
-                  <!-- /.project-details -->
-                </div>
-                <!--/.swiper-slide -->
-                <div class="swiper-slide">
-                  <figure class="rounded mb-7">
-                    <a href="./single-project.html"
-                      ><img
-                        src="/images/sp3.jpg"
-                        srcset="/images/sp3@2x.jpg 2x"
-                        alt=""
-                    /></a>
-                  </figure>
-                  <div
-                    class="project-details d-flex justify-content-center flex-column"
-                  >
-                    <div class="post-header">
-                      <h2 class="post-title h3">
-                        <a href="./single-project.html" class="link-dark"
-                          >Tortor Tellus Cursus</a
-                        >
-                      </h2>
-                      <div class="post-category text-ash">Stationary</div>
-                    </div>
-                    <!-- /.post-header -->
-                  </div>
-                  <!-- /.project-details -->
-                </div>
-                <!--/.swiper-slide -->
-                <div class="swiper-slide">
-                  <figure class="rounded mb-7">
-                    <a href="./single-project.html"
-                      ><img
-                        src="/images/sp4.jpg"
-                        srcset="/images/sp4@2x.jpg 2x"
-                        alt=""
-                    /></a>
-                  </figure>
-                  <div
-                    class="project-details d-flex justify-content-center flex-column"
-                  >
-                    <div class="post-header">
-                      <h2 class="post-title h3">
-                        <a href="./single-project.html" class="link-dark"
-                          >Ridiculus Sem Parturient</a
-                        >
-                      </h2>
-                      <div class="post-category text-ash">Web Application</div>
-                    </div>
-                    <!-- /.post-header -->
-                  </div>
-                  <!-- /.project-details -->
-                </div>
-                <!--/.swiper-slide -->
-                <div class="swiper-slide">
-                  <figure class="rounded mb-7">
-                    <a href="./single-project.html"
-                      ><img
-                        src="/images/sp5.jpg"
-                        srcset="/images/sp5@2x.jpg 2x"
-                        alt=""
-                    /></a>
-                  </figure>
-                  <div
-                    class="project-details d-flex justify-content-center flex-column"
-                  >
-                    <div class="post-header">
-                      <h2 class="post-title h3">
-                        <a href="./single-project.html" class="link-dark"
-                          >Cursus Sollicitudin Adipiscing</a
-                        >
-                      </h2>
-                      <div class="post-category text-ash">Web Design</div>
-                    </div>
-                    <!-- /.post-header -->
-                  </div>
-                  <!-- /.project-details -->
-                </div>
-                <!--/.swiper-slide -->
-                <div class="swiper-slide">
-                  <figure class="rounded mb-7">
-                    <a href="./single-project.html"
-                      ><img
-                        src="/images/sp6.jpg"
-                        srcset="/images/sp6@2x.jpg 2x"
-                        alt=""
-                    /></a>
-                  </figure>
-                  <div
-                    class="project-details d-flex justify-content-center flex-column"
-                  >
-                    <div class="post-header">
-                      <h2 class="post-title h3">
-                        <a href="./single-project.html" class="link-dark"
-                          >Fringilla Quam Vulputate</a
-                        >
-                      </h2>
-                      <div class="post-category text-ash">Stationary</div>
-                    </div>
-                    <!-- /.post-header -->
-                  </div>
-                  <!-- /.project-details -->
-                </div>
-                <!--/.swiper-slide -->
               </div>
-              <!--/.swiper-wrapper -->
+
+              <!-- Navigation buttons -->
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
-            <!-- /.swiper -->
           </div>
           <!-- /.swiper-container -->
         </div>
@@ -286,6 +160,100 @@
   </div>
 </template>
 <script setup>
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
+
+const props = defineProps({
+  projects: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const swiperRef = ref(null);
+let swiperInstance = null;
+
+onMounted(async () => {
+  // Chỉ khởi tạo Swiper ở client-side
+  if (process.client) {
+    await nextTick();
+
+    // Dynamic import Swiper để tránh SSR issues
+    const { Swiper } = await import("swiper");
+    const { Navigation } = await import("swiper/modules");
+
+    if (swiperRef.value) {
+      swiperInstance = new Swiper(swiperRef.value, {
+        modules: [Navigation],
+        slidesPerView: 1,
+        spaceBetween: 30,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+          },
+        },
+        // Các option bổ sung
+        loop: false,
+        grabCursor: true,
+        watchOverflow: true,
+      });
+    }
+  }
+});
+
+onUnmounted(() => {
+  if (swiperInstance) {
+    swiperInstance.destroy(true, true);
+  }
+});
+
+const projects = [
+  {
+    img: "/images/sp1.jpg",
+    img2x: "/images/sp1@2x.jpg",
+    title: "Cras Fermentum Sem",
+    category: "Mobile Design",
+    link: "./single-project.html",
+  },
+  {
+    img: "/images/sp2.jpg",
+    img2x: "/images/sp2@2x.jpg",
+    title: "Venenatis Euismod Vehicula",
+    category: "Web Design",
+    link: "./single-project.html",
+  },
+  {
+    img: "/images/sp3.jpg",
+    img2x: "/images/sp3@2x.jpg",
+    title: "Tortor Tellus Cursus",
+    category: "Stationary",
+    link: "./single-project.html",
+  },
+  {
+    img: "/images/sp4.jpg",
+    img2x: "/images/sp4@2x.jpg",
+    title: "Ridiculus Sem Parturient",
+    category: "Web Application",
+    link: "./single-project.html",
+  },
+  {
+    img: "/images/sp5.jpg",
+    img2x: "/images/sp5@2x.jpg",
+    title: "Cursus Sollicitudin Adipiscing",
+    category: "Web Design",
+    link: "./single-project.html",
+  },
+  {
+    img: "/images/sp6.jpg",
+    img2x: "/images/sp6@2x.jpg",
+    title: "Fringilla Quam Vulputate",
+    category: "Stationary",
+    link: "./single-project.html",
+  },
+];
 const teamMembers = [
   {
     name: "Coriss Ambady",
@@ -337,4 +305,24 @@ const teamMembers = [
   },
 ];
 </script>
-<style lang=""></style>
+<style scoped>
+.swiper-container {
+  --swiper-navigation-color: #333;
+  --swiper-navigation-size: 24px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background: rgba(255, 255, 255, 0.8);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 16px;
+  font-weight: bold;
+}
+</style>

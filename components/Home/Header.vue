@@ -18,18 +18,18 @@
           <div
             class="col-md-10 offset-md-1 offset-lg-0 col-lg-5 text-center text-lg-start"
           >
-            <h1 class="display-1 fs-54 mb-5 mx-md-n5 mx-lg-0 mt-7">
-              A digital agency <br class="d-md-none" />specializing on
-              <br class="d-md-none" />
+            <h1 class="display-1 fs-54 mb-0 mx-md-n0 mx-lg-0 mt-7">
+              <!-- A digital agency <br class="d-md-none" />specializing on -->
+              <div class="display-1 fs-54 my-0" v-html="formattedTitle"></div>
+              <!-- <br class="d-md-none" /> -->
               <ui-text-rotator
                 :texts="['mobile design', 'web design', '3D animation']"
                 className="text-primary"
                 :interval="2500"
               />
             </h1>
-            <p class="lead fs-lg mb-7">
-              We are an award winning design agency that strongly believes in
-              the power of creative ideas.
+            <p class="lead fs-lg mb-7 mt-7">
+              {{ data?.subtitle || "" }}
             </p>
             <span
               ><a class="btn btn-lg btn-primary rounded-pill me-2"
@@ -67,12 +67,20 @@
   </div>
 </template>
 <script setup>
-import { onMounted, watch, computed } from "vue";
+import { onMounted, computed } from "vue";
 import { useHomepageStore } from "~/stores/useItemStore";
-
 const itemStore = useHomepageStore();
-const demos = useState("demos", () => []);
-const data = useState("homepage_items", () => []);
+const data = useState("header");
+
+onMounted(async () => {
+  const res = await itemStore.fetchItem("homepage_sections", 3);
+  data.value = res;
+});
+
+const formattedTitle = computed(() => {
+  if (!data.value) return "";
+  return data.value.title.replace("agency ", "agency <br class='d-md-none' />");
+});
 
 const images = [
   "c1.png",
@@ -83,19 +91,4 @@ const images = [
   "c6.png",
   "c7.png",
 ];
-
-onMounted(async () => {
-  const res = await itemStore.fetchItemsSection("homepage_items", 3, true);
-  console.log(res, "sssssssssssssss");
-
-  data.value = res;
-});
-
-watch(
-  () => data.value,
-  (newVal) => {
-    demos.value = newVal.filter((item) => item.title === "Demos");
-  },
-  { immediate: true }
-);
 </script>

@@ -35,7 +35,7 @@ export const useHomepageStore = defineStore("homepage", () => {
   const fetchItemsSection = async (
     table: string,
     id: number,
-    onlyReturn = false
+    onlyReturn = true
   ) => {
     if (!ALLOWED_TABLES.includes(table)) {
       throw new Error(`Table '${table}' is not allowed.`);
@@ -55,11 +55,11 @@ export const useHomepageStore = defineStore("homepage", () => {
       return data;
     }
 
-    itemsSection.value = data || [];
+    // itemsSection.value = data || [];
   };
 
   // fetch a record
-  const fetchItem = async (table: string, id: number, onlyReturn = false) => {
+  const fetchItem = async (table: string, id: number, onlyReturn = true) => {
     if (!ALLOWED_TABLES.includes(table)) {
       throw new Error(`Table '${table}' is not allowed.`);
     }

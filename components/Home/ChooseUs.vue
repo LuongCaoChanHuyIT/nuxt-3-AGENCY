@@ -25,7 +25,7 @@
               <div class="card plain accordion-item">
                 <div class="card-header" id="headingOne">
                   <button
-                    class="accordion-button"
+                    class=""
                     data-bs-toggle="collapse"
                     data-bs-target="#collapseOne"
                     aria-expanded="true"
