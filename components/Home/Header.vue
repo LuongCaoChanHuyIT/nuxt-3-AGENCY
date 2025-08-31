@@ -67,6 +67,13 @@
   </div>
 </template>
 <script setup>
+import { onMounted, watch, computed } from "vue";
+import { useHomepageStore } from "~/stores/useItemStore";
+
+const itemStore = useHomepageStore();
+const demos = useState("demos", () => []);
+const data = useState("homepage_items", () => []);
+
 const images = [
   "c1.png",
   "c2.png",
@@ -76,4 +83,19 @@ const images = [
   "c6.png",
   "c7.png",
 ];
+
+onMounted(async () => {
+  const res = await itemStore.fetchItemsSection("homepage_items", 3, true);
+  console.log(res, "sssssssssssssss");
+
+  data.value = res;
+});
+
+watch(
+  () => data.value,
+  (newVal) => {
+    demos.value = newVal.filter((item) => item.title === "Demos");
+  },
+  { immediate: true }
+);
 </script>

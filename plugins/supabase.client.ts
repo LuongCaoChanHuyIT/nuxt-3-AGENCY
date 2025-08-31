@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
   const supabaseUrl = config.public.supabaseUrl;
   const supabaseKey = config.public.supabaseKey;
 
-  console.log(supabaseUrl, supabaseKey);
+  // console.log(supabaseUrl, supabaseKey);
 
   const supabase = createClient(supabaseUrl, supabaseKey, {
     auth: { persistSession: false },

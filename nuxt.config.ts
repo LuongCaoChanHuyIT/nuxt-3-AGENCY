@@ -13,6 +13,10 @@ export default defineNuxtConfig({
   ],
   plugins: [{ src: "~/plugins/bootstrap.client.ts", mode: "client" }],
   modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@pinia-plugin-persistedstate/nuxt"],
+  pinia: {
+    // @ts-ignore
+    autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
+  },
   app: {
     head: {
       link: [
@@ -22,10 +26,10 @@ export default defineNuxtConfig({
         },
       ],
       script: [
-        {
-          src: "/js/theme.js",
-          tagPosition: "bodyClose",
-        },
+        // {
+        //   src: "/js/theme.js",
+        //   tagPosition: "bodyClose",
+        // },
         {
           src: "/js/plugins.js",
           tagPosition: "bodyClose",
