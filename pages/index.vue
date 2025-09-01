@@ -8,8 +8,8 @@
       :teamSection="homepageStore.team"
       :projectSection="homepageStore.projects"
     />
-    <!-- <home-happy-customers :section="homepageStore.testimonials" /> -->
-    <!-- <home-f-a-q :section="homepageStore.faq" /> -->
+    <home-happy-customers :section="homepageStore.testimonials" />
+    <home-f-a-q :section="homepageStore.faq" />
   </div>
 </template>
 <script setup>

@@ -5,12 +5,14 @@
         <div class="row gx-lg-8 gx-xl-12 gy-10">
           <!-- Cột trái -->
           <div class="col-lg-6 mb-0">
-            <h2 class="fs-16 text-uppercase text-primary mb-4">FAQ</h2>
+            <h2 class="fs-16 text-uppercase text-primary mb-4">
+              {{ section.section_key?.toUpperCase() }}
+            </h2>
             <h3 class="display-3 mb-4">
-              {{ dataFAQ.title }}
+              {{ section.title }}
             </h3>
             <p class="mb-6">
-              {{ dataFAQ.subtitle }}
+              {{ section.subtitle }}
             </p>
             <a href="#" class="btn btn-primary rounded-pill">All FAQ</a>
           </div>
@@ -19,7 +21,7 @@
           <div class="col-lg-6">
             <div id="accordion-3" class="accordion-wrapper">
               <div
-                v-for="(faq, index) in dataFAQs"
+                v-for="(faq, index) in section.items"
                 :key="faq.id || index"
                 class="card accordion-item shadow-lg"
               >
@@ -70,19 +72,35 @@
   </div>
 </template>
 
-<script setup>
-import { onMounted } from "vue";
-import { useHomepageStore } from "~/stores/useItemStore";
+<script setup lang="ts">
+interface FaqItem {
+  id: number;
+  section_id: number;
+  title: string;
+  description: string;
+  image_url?: string | null;
+  link_url?: string | null;
+  extra?: string | null;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  position?: string | null;
+}
 
-const itemStore = useHomepageStore();
-const dataFAQ = useState("dataFAQ", () => ({}));
-const dataFAQs = useState("dataFAQs", () => []);
+interface Section {
+  id: number;
+  section_key: string;
+  title: string;
+  subtitle: string | null;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  items: FaqItem[];
+}
 
-onMounted(async () => {
-  const resHappy = await itemStore.fetchItem("homepage_sections", 11, true);
-  const resHappies = await itemStore.fetchItemsSection("homepage_items", 11);
-
-  dataFAQ.value = resHappy;
-  dataFAQs.value = resHappies;
-});
+defineProps<{
+  section: Section;
+}>();
 </script>
