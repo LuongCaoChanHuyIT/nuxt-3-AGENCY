@@ -1,21 +1,23 @@
-<template lang="">
+<template>
   <div>
     <section class="wrapper bg-light">
       <div class="container pt-12 pt-lg-8 pb-14 pb-md-16">
+        <!-- TEAM -->
         <div class="row gx-lg-8 gx-xl-12 gy-10 gy-lg-0 mb-11">
           <div class="col-lg-4 text-center text-lg-start">
             <h2 class="fs-16 text-uppercase text-primary mb-3">
               Company Facts
             </h2>
             <h3 class="display-3 mb-4 pe-xxl-5">
-              {{ dataTeam?.title }}
+              {{ teamSection.title }}
             </h3>
             <p class="mb-0 pe-xxl-11">
-              {{ dataTeam?.subtitle }}
+              {{ teamSection.subtitle }}
             </p>
           </div>
           <!-- /column -->
           <div class="col-lg-8 mt-lg-2">
+            <!-- counters: nếu có -->
             <div
               class="row align-items-center counter-wrapper gy-6 text-center"
             >
@@ -32,17 +34,17 @@
                 <h3 class="counter">{{ item.value }}</h3>
                 <p>{{ item.label }}</p>
               </div>
-              <!--/column -->
             </div>
-            <!--/.row -->
           </div>
           <!-- /column -->
         </div>
         <!-- /.row -->
+
+        <!-- Team members -->
         <div class="row grid-view gy-6 gy-xl-0">
           <div
-            v-for="(member, index) in dataTeams"
-            :key="index"
+            v-for="member in teamSection.items"
+            :key="member.id"
             class="col-md-6 col-xl-3"
           >
             <div class="card shadow-lg">
@@ -54,13 +56,11 @@
                 />
                 <h4 class="mb-1">{{ member.title }}</h4>
                 <div class="meta mb-2">{{ member.description }}</div>
-                <p class="mb-2">{{ member.desc }}</p>
+                <p class="mb-2">
+                  Fermentum massa justo sit amet risus morbi leo.
+                </p>
                 <nav class="nav social mb-0">
-                  <a
-                    v-for="(social, i) in member.socials"
-                    :key="i"
-                    :href="social.link"
-                  >
+                  <a v-for="(social, i) in countersMember || []" :key="i">
                     <i :class="social.icon"></i>
                   </a>
                 </nav>
@@ -71,6 +71,8 @@
         <!--/.row -->
       </div>
       <!-- /.container -->
+
+      <!-- PROJECTS -->
       <div class="overflow-hidden">
         <div class="container pt-12 pt-lg-7 pb-14 pb-md-16">
           <div class="row">
@@ -79,23 +81,23 @@
                 Latest Projects
               </h2>
               <h3 class="display-3 mb-10">
-                {{ dataProject?.title }}
+                {{ projectSection.title }}
               </h3>
             </div>
-            <!-- /column -->
           </div>
           <!-- /.row -->
+
           <div class="swiper-container grid-view nav-bottom nav-color mb-14">
             <div ref="swiperRef" class="swiper overflow-visible">
               <div class="swiper-wrapper">
                 <div
-                  v-for="(project, index) in dataProjects"
-                  :key="index"
+                  v-for="project in projectSection.items"
+                  :key="project.id"
                   class="swiper-slide"
                 >
                   <figure class="rounded mb-7">
-                    <a :href="project.link_url">
-                      <img :src="project.image_url" alt="" />
+                    <a :href="project.link_url || '#'">
+                      <img :src="project.image_url || ''" alt="" />
                     </a>
                   </figure>
                   <div
@@ -103,7 +105,7 @@
                   >
                     <div class="post-header">
                       <h2 class="post-title h3">
-                        <a :href="project.link_url" class="link-dark">{{
+                        <a :href="project.link_url || '#'" class="link-dark">{{
                           project.title
                         }}</a>
                       </h2>
@@ -122,7 +124,7 @@
           </div>
           <!-- /.swiper-container -->
         </div>
-        <!-- /.container -->
+
         <div class="divider text-soft-primary mx-n2">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
             <path
@@ -136,138 +138,54 @@
     </section>
   </div>
 </template>
-<script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
-import { useHomepageStore } from "~/stores/useItemStore";
 
-const itemStore = useHomepageStore();
-const dataTeam = useState("dataTeam", () => []);
-const dataTeams = useState("dataTeams", () => []);
-const dataProject = useState("dataProject", () => []);
-const dataProjects = useState("dataProjects", () => []);
+<script setup lang="ts">
+interface Item {
+  id: number;
+  title: string;
+  description: string;
+  image_url?: string | null;
+  link_url?: string | null;
+  extra?: any;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  position?: string | null;
+}
 
+interface Section {
+  id: number;
+  section_key: string;
+  title: string;
+  subtitle: string | null;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  items: Item[];
+}
+
+const props = defineProps<{
+  teamSection: Section;
+  projectSection: Section;
+}>();
+
+// Nếu muốn giữ counters demo, bạn có thể hardcode hoặc truyền props khác
 const counters = [
-  {
-    icon: "uil uil-presentation-check",
-    value: "1000+",
-    label: "Completed Projects",
-  },
-  {
-    icon: "uil uil-user-check",
-    value: "50K+",
-    label: "Happy Customers",
-  },
-  {
-    icon: "uil uil-trophy",
-    value: "20+",
-    label: "Awards Won",
-  },
+  { icon: "uil uil-users-alt", value: "250K+", label: "Happy Clients" },
+  { icon: "uil uil-briefcase-alt", value: "1.2K", label: "Projects Done" },
+  { icon: "uil uil-award", value: "50+", label: "Awards" },
 ];
 
-const projects = [
-  {
-    img: "/images/sp1.jpg",
-    img2x: "/images/sp1@2x.jpg",
-    title: "Cras Fermentum Sem",
-    category: "Mobile Design",
-    link: "./single-project.html",
-  },
-  {
-    img: "/images/sp2.jpg",
-    img2x: "/images/sp2@2x.jpg",
-    title: "Venenatis Euismod Vehicula",
-    category: "Web Design",
-    link: "./single-project.html",
-  },
-  {
-    img: "/images/sp3.jpg",
-    img2x: "/images/sp3@2x.jpg",
-    title: "Tortor Tellus Cursus",
-    category: "Stationary",
-    link: "./single-project.html",
-  },
-  {
-    img: "/images/sp4.jpg",
-    img2x: "/images/sp4@2x.jpg",
-    title: "Ridiculus Sem Parturient",
-    category: "Web Application",
-    link: "./single-project.html",
-  },
-  {
-    img: "/images/sp5.jpg",
-    img2x: "/images/sp5@2x.jpg",
-    title: "Cursus Sollicitudin Adipiscing",
-    category: "Web Design",
-    link: "./single-project.html",
-  },
-  {
-    img: "/images/sp6.jpg",
-    img2x: "/images/sp6@2x.jpg",
-    title: "Fringilla Quam Vulputate",
-    category: "Stationary",
-    link: "./single-project.html",
-  },
+const countersMember = [
+  { icon: "uil uil-twitter", value: "250K+", label: "Happy Clients" },
+  { icon: "uil uil-facebook-f", value: "1.2K", label: "Projects Done" },
+  { icon: "uil uil-dribbble", value: "50+", label: "Awards" },
 ];
-const teamMembers = [
-  {
-    desc: "Fermentum massa justo sit amet risus morbi leo.",
-    socials: [
-      { icon: "uil uil-twitter", link: "#" },
-      { icon: "uil uil-facebook-f", link: "#" },
-      { icon: "uil uil-dribbble", link: "#" },
-    ],
-  },
-  {
-    desc: "Fermentum massa justo sit amet risus morbi leo.",
-    socials: [
-      { icon: "uil uil-twitter", link: "#" },
-      { icon: "uil uil-facebook-f", link: "#" },
-      { icon: "uil uil-dribbble", link: "#" },
-    ],
-  },
-  {
-    desc: "Fermentum massa justo sit amet risus morbi leo.",
-    socials: [
-      { icon: "uil uil-twitter", link: "#" },
-      { icon: "uil uil-facebook-f", link: "#" },
-      { icon: "uil uil-dribbble", link: "#" },
-    ],
-  },
-  {
-    desc: "Fermentum massa justo sit amet risus morbi leo.",
-    socials: [
-      { icon: "uil uil-twitter", link: "#" },
-      { icon: "uil uil-facebook-f", link: "#" },
-      { icon: "uil uil-dribbble", link: "#" },
-    ],
-  },
-];
-
-onMounted(async () => {
-  const team = await itemStore.fetchItem("homepage_sections", 8, true);
-  const teams = await itemStore.fetchItemsSection("homepage_items", 8);
-  const project = await itemStore.fetchItem("homepage_sections", 9, true);
-  const projects = await itemStore.fetchItemsSection("homepage_items", 9);
-  dataTeam.value = team;
-  dataTeams.value = teams.map((item, i) => {
-    return {
-      ...item,
-      ...teamMembers[i % teamMembers.length],
-    };
-  });
-  dataProject.value = project;
-  dataProjects.value = projects;
-});
-
-const props = defineProps({
-  projects: {
-    type: Array,
-    default: () => [],
-  },
-});
 
 const swiperRef = ref(null);
-let swiperInstance = null;
+let swiperInstance: any = null;
 
 onMounted(async () => {
   if (process.client) {

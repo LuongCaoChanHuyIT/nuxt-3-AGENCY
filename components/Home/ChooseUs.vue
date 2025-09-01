@@ -3,6 +3,7 @@
     <section class="wrapper bg-gradient-reverse-primary">
       <div class="container pb-14 pb-md-16">
         <div class="row gx-lg-8 gx-xl-12 gy-10 align-items-center">
+          <!-- Hình bên trái (static như bạn đang dùng) -->
           <div class="col-lg-7">
             <figure>
               <img
@@ -13,60 +14,53 @@
               />
             </figure>
           </div>
-          <!--/column -->
 
+          <!-- Text + Accordion -->
           <div class="col-lg-5">
             <h2 class="fs-15 text-uppercase text-primary mb-3">
-              Why Choose Us?
+              {{ section.subtitle || "Why Choose Us?" }}
             </h2>
             <h3 class="display-3 mb-7">
-              We bring solutions to make life easier.
+              {{ section.title }}
             </h3>
 
-            <div class="accordion accordion-wrapper" id="accordionExample">
+            <div class="accordion accordion-wrapper" :id="accordionDomId">
               <div
-                v-for="(item, index) in items.filter(
+                v-for="(item, index) in section?.items?.filter(
                   (item) => item.title !== 'img'
                 )"
                 :key="item.id"
                 class="card plain accordion-item"
               >
-                <div class="card-header" :id="`heading${item.id}`">
+                <div class="card-header" :id="`heading-${item.id}`">
                   <button
                     class="collapsed"
                     data-bs-toggle="collapse"
-                    :data-bs-target="`#collapse${item.id}`"
-                    :aria-controls="`collapse${item.id}`"
+                    :data-bs-target="`#collapse-${item.id}`"
+                    :aria-controls="`collapse-${item.id}`"
                     :aria-expanded="index === 0 ? 'true' : 'false'"
                   >
                     {{ item.title }}
                   </button>
                 </div>
-                <!--/.card-header -->
 
                 <div
-                  :id="`collapse${item.id}`"
+                  :id="`collapse-${item.id}`"
                   class="accordion-collapse collapse"
                   :class="{ show: index === 0 }"
-                  :aria-labelledby="`heading${item.id}`"
-                  data-bs-parent="#accordionExample"
+                  :aria-labelledby="`heading-${item.id}`"
+                  :data-bs-parent="`#${accordionDomId}`"
                 >
                   <div class="card-body">
                     <p>{{ item.description }}</p>
                   </div>
-                  <!--/.card-body -->
                 </div>
-                <!--/.accordion-collapse -->
               </div>
-              <!--/.accordion-item -->
             </div>
-            <!--/.accordion -->
           </div>
           <!--/column -->
         </div>
-        <!--/.row -->
       </div>
-      <!-- /.container -->
 
       <div class="overflow-hidden">
         <div class="divider text-light mx-n2">
@@ -78,45 +72,41 @@
           </svg>
         </div>
       </div>
-      <!-- /.overflow-hidden -->
     </section>
   </div>
 </template>
 
-<script setup>
-import { useHomepageStore } from "~/stores/useItemStore";
-import { onMounted, watch, computed } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 
-const itemStore = useHomepageStore();
-const data = useState("chooseus", () => []);
-const items = useState("chooseusArray", () => []);
+interface Item {
+  id: number;
+  title: string;
+  description: string;
+  image_url?: string | null;
+  link_url?: string | null;
+  extra?: any;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  position?: string | null;
+}
 
-const accordions = [
-  {
-    id: "One",
-    title: "Professional Design",
-    content:
-      "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel.",
-  },
-  {
-    id: "Two",
-    title: "Top-Notch Support",
-    content:
-      "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel.",
-  },
-  {
-    id: "Three",
-    title: "Header and Slider Options",
-    content:
-      "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel.",
-  },
-];
+interface Section {
+  id: number;
+  section_key: string;
+  title: string;
+  subtitle: string | null;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  items: Item[];
+}
 
-onMounted(async () => {
-  const res = await itemStore.fetchItem("homepage_sections", 7, true);
-  const resItems = await itemStore.fetchItemsSection("homepage_items", 7);
-  items.value = resItems;
+const props = defineProps<{ section: Section }>();
 
-  data.value = res;
-});
+// ID duy nhất cho accordion (tránh đụng nhau nếu render nhiều section)
+const accordionDomId = computed(() => `accordion-${props.section.id}`);
 </script>

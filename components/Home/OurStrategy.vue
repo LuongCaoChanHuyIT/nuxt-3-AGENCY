@@ -1,3 +1,42 @@
+<script setup lang="ts">
+interface ProcessItem {
+  id: number;
+  section_id: number;
+  title: string;
+  description: string;
+  image_url: string | null;
+  link_url: string | null;
+  extra: string | null;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  position: string | null;
+}
+
+interface Section {
+  id: number;
+  section_key: string;
+  title: string;
+  subtitle: string | null;
+  order_index: number;
+  status: number;
+  created_at: string;
+  updated_at: string | null;
+  items: ProcessItem[];
+}
+
+const props = defineProps<{
+  section: Section;
+}>();
+
+const steps = [
+  { class: "me-lg-6" },
+  { class: "ms-lg-13 mt-6" },
+  { class: "mx-lg-6 mt-6" },
+];
+</script>
+
 <template>
   <section class="wrapper bg-light">
     <div class="container pb-14 pb-md-17">
@@ -5,10 +44,10 @@
         <!-- Cột bên trái: danh sách steps -->
         <div class="col-lg-6 order-lg-2">
           <div
-            v-for="(step, index) in items"
-            :key="index"
+            v-for="(step, index) in section.items"
+            :key="step.id"
             class="card shadow-lg"
-            :class="step.class"
+            :class="steps[index]?.class"
           >
             <div class="card-body p-6">
               <div class="d-flex flex-row">
@@ -16,7 +55,7 @@
                   <span
                     class="icon btn btn-circle btn-lg btn-soft-primary pe-none me-4"
                   >
-                    <span class="number">{{ index }}</span>
+                    <span class="number">{{ index + 1 }}</span>
                   </span>
                 </div>
                 <div>
@@ -32,7 +71,7 @@
         <div class="col-lg-6">
           <h2 class="fs-16 text-uppercase text-primary mb-3">Our Strategy</h2>
           <h3 class="display-3 mb-4">
-            {{ data.title }}
+            {{ section.title }}
           </h3>
           <p>
             Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis
@@ -51,35 +90,3 @@
     </div>
   </section>
 </template>
-<script setup>
-import { useHomepageStore } from "~/stores/useItemStore";
-import { onMounted, watch, computed } from "vue";
-
-const itemStore = useHomepageStore();
-const data = useState("ourStrategy", () => []);
-const items = useState("ourStrategies", () => []);
-const steps = [
-  {
-    class: "me-lg-6",
-  },
-  {
-    class: "ms-lg-13 mt-6",
-  },
-  {
-    class: "mx-lg-6 mt-6",
-  },
-];
-
-onMounted(async () => {
-  const res = await itemStore.fetchItem("homepage_sections", 6, true);
-  const resItems = await itemStore.fetchItemsSection("homepage_items", 6);
-  items.value = resItems.map((item, index) => {
-    return {
-      ...item,
-      class: steps[index % steps.length].class,
-    };
-  });
-
-  data.value = res;
-});
-</script>

@@ -1,16 +1,23 @@
 <template>
   <div>
-    <home-header />
-    <home-we-do />
-    <home-our-strategy />
-    <home-choose-us />
-    <home-company-facts />
-    <home-happy-customers />
-    <home-f-a-q />
-    <!-- {{ itemStore.items }} -->
+    <home-header :section="homepageStore.hero" />
+    <home-we-do :section="homepageStore.services" />
+    <home-our-strategy :section="homepageStore.process" />
+    <home-choose-us :section="homepageStore.chooseus" />
+    <home-company-facts
+      :teamSection="homepageStore.team"
+      :projectSection="homepageStore.projects"
+    />
+    <!-- <home-happy-customers :section="homepageStore.testimonials" /> -->
+    <!-- <home-f-a-q :section="homepageStore.faq" /> -->
   </div>
 </template>
 <script setup>
+import { useHomepageStore } from "~/stores/useItemStore";
+const homepageStore = useHomepageStore();
+onMounted(() => {
+  homepageStore.fechHomepageSection();
+});
 useHead({
   title: "Sandbox - Modern & Multipurpose Bootstrap 5 Template",
   meta: [
@@ -28,4 +35,3 @@ useHead({
   ],
 });
 </script>
-<style lang=""></style>
