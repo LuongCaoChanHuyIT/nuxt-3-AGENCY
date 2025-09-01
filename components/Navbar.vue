@@ -335,7 +335,6 @@ const documentation = computed(() =>
 
 const docGroup = computed(() => groupByKey(documentation.value, "description"));
 
-// Hàm group chung
 const groupByKey = (arr, key) => {
   if (!arr || !arr.length) return [];
   return Object.values(

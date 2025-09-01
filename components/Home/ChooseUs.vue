@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div>
     <section class="wrapper bg-gradient-reverse-primary">
       <div class="container pb-14 pb-md-16">
@@ -14,6 +14,7 @@
             </figure>
           </div>
           <!--/column -->
+
           <div class="col-lg-5">
             <h2 class="fs-15 text-uppercase text-primary mb-3">
               Why Choose Us?
@@ -21,97 +22,37 @@
             <h3 class="display-3 mb-7">
               We bring solutions to make life easier.
             </h3>
+
             <div class="accordion accordion-wrapper" id="accordionExample">
-              <div class="card plain accordion-item">
-                <div class="card-header" id="headingOne">
-                  <button
-                    class=""
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
-                  >
-                    Professional Design
-                  </button>
-                </div>
-                <!--/.card-header -->
-                <div
-                  id="collapseOne"
-                  class="accordion-collapse collapse show"
-                  aria-labelledby="headingOne"
-                  data-bs-parent="#accordionExample"
-                >
-                  <div class="card-body">
-                    <p>
-                      Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                      condimentum nibh, ut fermentum massa justo sit amet risus.
-                      Cras mattis consectetur purus sit amet fermentum. Praesent
-                      commodo cursus magna, vel.
-                    </p>
-                  </div>
-                  <!--/.card-body -->
-                </div>
-                <!--/.accordion-collapse -->
-              </div>
-              <!--/.accordion-item -->
-              <div class="card plain accordion-item">
-                <div class="card-header" id="headingTwo">
+              <div
+                v-for="(item, index) in items.filter(
+                  (item) => item.title !== 'img'
+                )"
+                :key="item.id"
+                class="card plain accordion-item"
+              >
+                <div class="card-header" :id="`heading${item.id}`">
                   <button
                     class="collapsed"
                     data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo"
-                    aria-expanded="false"
-                    aria-controls="collapseTwo"
+                    :data-bs-target="`#collapse${item.id}`"
+                    :aria-controls="`collapse${item.id}`"
+                    :aria-expanded="index === 0 ? 'true' : 'false'"
                   >
-                    Top-Notch Support
+                    {{ item.title }}
                   </button>
                 </div>
                 <!--/.card-header -->
+
                 <div
-                  id="collapseTwo"
+                  :id="`collapse${item.id}`"
                   class="accordion-collapse collapse"
-                  aria-labelledby="headingTwo"
+                  :class="{ show: index === 0 }"
+                  :aria-labelledby="`heading${item.id}`"
                   data-bs-parent="#accordionExample"
                 >
                   <div class="card-body">
-                    <p>
-                      Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                      condimentum nibh, ut fermentum massa justo sit amet risus.
-                      Cras mattis consectetur purus sit amet fermentum. Praesent
-                      commodo cursus magna, vel.
-                    </p>
-                  </div>
-                  <!--/.card-body -->
-                </div>
-                <!--/.accordion-collapse -->
-              </div>
-              <!--/.accordion-item -->
-              <div class="card plain accordion-item">
-                <div class="card-header" id="headingThree">
-                  <button
-                    class="collapsed"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree"
-                    aria-expanded="false"
-                    aria-controls="collapseThree"
-                  >
-                    Header and Slider Options
-                  </button>
-                </div>
-                <!--/.card-header -->
-                <div
-                  id="collapseThree"
-                  class="accordion-collapse collapse"
-                  aria-labelledby="headingThree"
-                  data-bs-parent="#accordionExample"
-                >
-                  <div class="card-body">
-                    <p>
-                      Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                      condimentum nibh, ut fermentum massa justo sit amet risus.
-                      Cras mattis consectetur purus sit amet fermentum. Praesent
-                      commodo cursus magna, vel.
-                    </p>
+                    <p>{{ item.description }}</p>
                   </div>
                   <!--/.card-body -->
                 </div>
@@ -126,6 +67,7 @@
         <!--/.row -->
       </div>
       <!-- /.container -->
+
       <div class="overflow-hidden">
         <div class="divider text-light mx-n2">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
@@ -140,7 +82,41 @@
     </section>
   </div>
 </template>
-<script>
-export default {};
+
+<script setup>
+import { useHomepageStore } from "~/stores/useItemStore";
+import { onMounted, watch, computed } from "vue";
+
+const itemStore = useHomepageStore();
+const data = useState("chooseus", () => []);
+const items = useState("chooseusArray", () => []);
+
+const accordions = [
+  {
+    id: "One",
+    title: "Professional Design",
+    content:
+      "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel.",
+  },
+  {
+    id: "Two",
+    title: "Top-Notch Support",
+    content:
+      "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel.",
+  },
+  {
+    id: "Three",
+    title: "Header and Slider Options",
+    content:
+      "Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus magna, vel.",
+  },
+];
+
+onMounted(async () => {
+  const res = await itemStore.fetchItem("homepage_sections", 7, true);
+  const resItems = await itemStore.fetchItemsSection("homepage_items", 7);
+  items.value = resItems;
+
+  data.value = res;
+});
 </script>
-<style lang=""></style>

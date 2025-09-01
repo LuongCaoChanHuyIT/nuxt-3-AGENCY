@@ -8,8 +8,7 @@
               Happy Customers
             </h2>
             <h3 class="display-3 mb-10 px-xxl-10">
-              Don't take our word for it. See what customers are saying about
-              us.
+              {{ dataHappy?.title }}
             </h3>
           </div>
           <!-- /column -->
@@ -17,179 +16,25 @@
         <!-- /.row -->
         <div class="grid">
           <div class="row isotope gy-6">
-            <div class="item col-md-6 col-xl-4">
+            <div
+              class="item col-md-6 col-xl-4"
+              v-for="(t, index) in dataHappies"
+              :key="index"
+            >
               <div class="card shadow-lg">
                 <div class="card-body">
                   <span class="ratings five mb-2"></span>
                   <blockquote class="border-0 mb-0">
-                    <p>
-                      “Vivamus sagittis lacus vel augue laoreet rutrum faucibus
-                      dolor auctor. Vestibulum id ligula porta felis euismod
-                      semper. Cras justo odio dapibus facilisis sociis natoque
-                      penatibus.”
-                    </p>
+                    <p>{{ t.description }}</p>
                     <div class="blockquote-details">
                       <img
                         class="rounded-circle w-12"
-                        src="/images/te1.jpg"
-                        srcset="/images/te1@2x.jpg 2x"
+                        :src="t.image_url"
                         alt=""
                       />
                       <div class="info">
-                        <h5 class="mb-1">Coriss Ambady</h5>
-                        <p class="mb-0">Financial Analyst</p>
-                      </div>
-                    </div>
-                  </blockquote>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!--/column -->
-            <div class="item col-md-6 col-xl-4">
-              <div class="card shadow-lg">
-                <div class="card-body">
-                  <span class="ratings five mb-2"></span>
-                  <blockquote class="border-0 mb-0">
-                    <p>
-                      “Fusce dapibus, tellus ac cursus tortor mauris condimentum
-                      fermentum massa justo sit amet. Vivamus sagittis lacus vel
-                      augue laoreet rutrum faucibus dolor auctor. Cras mattis
-                      consectetur purus sit amet fermentum. Aenean lacinia
-                      bibendum nulla sed.”
-                    </p>
-                    <div class="blockquote-details">
-                      <img
-                        class="rounded-circle w-12"
-                        src="/images/te2.jpg"
-                        srcset="/images/te2@2x.jpg 2x"
-                        alt=""
-                      />
-                      <div class="info">
-                        <h5 class="mb-1">Cory Zamora</h5>
-                        <p class="mb-0">Marketing Specialist</p>
-                      </div>
-                    </div>
-                  </blockquote>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!--/column -->
-            <div class="item col-md-6 col-xl-4">
-              <div class="card shadow-lg">
-                <div class="card-body">
-                  <span class="ratings five mb-2"></span>
-                  <blockquote class="border-0 mb-0">
-                    <p>
-                      “Curabitur blandit tempus porttitor. Vivamus sagittis
-                      lacus vel augue laoreet rutrum faucibus dolor auctor.
-                      Nullam quis risus eget porta ac consectetur vestibulum.
-                      Donec sed odio dui consectetur adipiscing elit.”
-                    </p>
-                    <div class="blockquote-details">
-                      <img
-                        class="rounded-circle w-12"
-                        src="/images/te3.jpg"
-                        srcset="/images/te3@2x.jpg 2x"
-                        alt=""
-                      />
-                      <div class="info">
-                        <h5 class="mb-1">Nikolas Brooten</h5>
-                        <p class="mb-0">Sales Manager</p>
-                      </div>
-                    </div>
-                  </blockquote>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!--/column -->
-            <div class="item col-md-6 col-xl-4">
-              <div class="card shadow-lg">
-                <div class="card-body">
-                  <span class="ratings five mb-2"></span>
-                  <blockquote class="border-0 mb-0">
-                    <p>
-                      “Etiam adipiscing tincidunt elit convallis felis suscipit
-                      ut. Phasellus rhoncus tincidunt auctor. Nullam eu sagittis
-                      mauris. Donec non dolor ac elit aliquam tincidunt at at
-                      sapien. Aenean tortor libero condimentum ac laoreet
-                      vitae.”
-                    </p>
-                    <div class="blockquote-details">
-                      <img
-                        class="rounded-circle w-12"
-                        src="/images/te4.jpg"
-                        srcset="/images/te4@2x.jpg 2x"
-                        alt=""
-                      />
-                      <div class="info">
-                        <h5 class="mb-1">Coriss Ambady</h5>
-                        <p class="mb-0">Financial Analyst</p>
-                      </div>
-                    </div>
-                  </blockquote>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!--/column -->
-            <div class="item col-md-6 col-xl-4">
-              <div class="card shadow-lg">
-                <div class="card-body">
-                  <span class="ratings five mb-2"></span>
-                  <blockquote class="border-0 mb-0">
-                    <p>
-                      “Maecenas sed diam eget risus varius blandit sit amet non
-                      magna. Cum sociis natoque penatibus magnis dis montes,
-                      nascetur ridiculus mus. Donec sed odio dui. Nulla vitae
-                      elit libero.”
-                    </p>
-                    <div class="blockquote-details">
-                      <img
-                        class="rounded-circle w-12"
-                        src="/images/te5.jpg"
-                        srcset="/images/te5@2x.jpg 2x"
-                        alt=""
-                      />
-                      <div class="info">
-                        <h5 class="mb-1">Jackie Sanders</h5>
-                        <p class="mb-0">Investment Planner</p>
-                      </div>
-                    </div>
-                  </blockquote>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!--/column -->
-            <div class="item col-md-6 col-xl-4">
-              <div class="card shadow-lg">
-                <div class="card-body">
-                  <span class="ratings five mb-2"></span>
-                  <blockquote class="border-0 mb-0">
-                    <p>
-                      “Donec id elit non mi porta gravida at eget metus. Nulla
-                      vitae elit libero, a pharetra augue. Cum sociis natoque
-                      penatibus et magnis dis parturient montes, nascetur
-                      ridiculus mus.”
-                    </p>
-                    <div class="blockquote-details">
-                      <img
-                        class="rounded-circle w-12"
-                        src="/images/te6.jpg"
-                        srcset="/images/te6@2x.jpg 2x"
-                        alt=""
-                      />
-                      <div class="info">
-                        <h5 class="mb-1">Laura Widerski</h5>
-                        <p class="mb-0">Sales Specialist</p>
+                        <h5 class="mb-1">{{ t.title }}</h5>
+                        <p class="mb-0">{{ t.position }}</p>
                       </div>
                     </div>
                   </blockquote>
@@ -208,7 +53,27 @@
     </section>
   </div>
 </template>
-<script>
-export default {};
+<script setup>
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { useHomepageStore } from "~/stores/useItemStore";
+
+const itemStore = useHomepageStore();
+const dataHappy = useState("dataHappy", () => []);
+const dataHappies = useState("dataHappies", () => []);
+
+onMounted(async () => {
+  const resHappy = await itemStore.fetchItem("homepage_sections", 10, true);
+  const resHappies = await itemStore.fetchItemsSection("homepage_items", 10);
+
+  dataHappy.value = resHappy;
+  dataHappies.value = resHappies;
+});
+
+const props = defineProps({
+  projects: {
+    type: Array,
+    default: () => [],
+  },
+});
 </script>
 <style lang=""></style>

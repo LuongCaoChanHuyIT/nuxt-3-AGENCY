@@ -29,7 +29,7 @@
               />
             </h1>
             <p class="lead fs-lg mb-7 mt-7">
-              {{ data?.subtitle || "" }}
+              {{ data?.subtitle }}
             </p>
             <span
               ><a class="btn btn-lg btn-primary rounded-pill me-2"
@@ -39,7 +39,7 @@
           </div>
         </div>
         <p class="text-center mb-8">
-          Trusted by over 2K+ clients across the world
+          {{ dataClient?.title }}
         </p>
         <div
           class="row row-cols-4 row-cols-md-4 row-cols-lg-7 row-cols-xl-7 gy-10 mb-2 d-flex align-items-center justify-content-center"
@@ -71,9 +71,11 @@ import { onMounted, computed } from "vue";
 import { useHomepageStore } from "~/stores/useItemStore";
 const itemStore = useHomepageStore();
 const data = useState("header");
-
+const dataClient = useState("dataClient");
 onMounted(async () => {
   const res = await itemStore.fetchItem("homepage_sections", 3);
+  const resClient = await itemStore.fetchItem("homepage_sections", 4);
+  dataClient.value = resClient;
   data.value = res;
 });
 

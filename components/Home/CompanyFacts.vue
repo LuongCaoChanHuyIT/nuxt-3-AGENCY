@@ -8,11 +8,10 @@
               Company Facts
             </h2>
             <h3 class="display-3 mb-4 pe-xxl-5">
-              We are proud of our design team
+              {{ dataTeam?.title }}
             </h3>
             <p class="mb-0 pe-xxl-11">
-              Just sit back and relax while we take care of your business needs
-              for you.
+              {{ dataTeam?.subtitle }}
             </p>
           </div>
           <!-- /column -->
@@ -20,34 +19,18 @@
             <div
               class="row align-items-center counter-wrapper gy-6 text-center"
             >
-              <div class="col-md-4">
+              <div
+                class="col-md-4"
+                v-for="(item, index) in counters"
+                :key="index"
+              >
                 <div
                   class="icon btn btn-circle btn-lg btn-soft-primary pe-none mb-4"
                 >
-                  <i class="uil uil-presentation-check"></i>
+                  <i :class="item.icon"></i>
                 </div>
-                <h3 class="counter">1000+</h3>
-                <p>Completed Projects</p>
-              </div>
-              <!--/column -->
-              <div class="col-md-4">
-                <div
-                  class="icon btn btn-circle btn-lg btn-soft-primary pe-none mb-4"
-                >
-                  <i class="uil uil-user-check"></i>
-                </div>
-                <h3 class="counter">50K+</h3>
-                <p>Happy Customers</p>
-              </div>
-              <!--/column -->
-              <div class="col-md-4">
-                <div
-                  class="icon btn btn-circle btn-lg btn-soft-primary pe-none mb-4"
-                >
-                  <i class="uil uil-trophy"></i>
-                </div>
-                <h3 class="counter">20+</h3>
-                <p>Awards Won</p>
+                <h3 class="counter">{{ item.value }}</h3>
+                <p>{{ item.label }}</p>
               </div>
               <!--/column -->
             </div>
@@ -58,7 +41,7 @@
         <!-- /.row -->
         <div class="row grid-view gy-6 gy-xl-0">
           <div
-            v-for="(member, index) in teamMembers"
+            v-for="(member, index) in dataTeams"
             :key="index"
             class="col-md-6 col-xl-3"
           >
@@ -66,12 +49,11 @@
               <div class="card-body">
                 <img
                   class="rounded-circle w-15 mb-4"
-                  :src="member.image"
-                  :srcset="`${member.image2x} 2x`"
-                  :alt="member.name"
+                  :src="member.image_url"
+                  :alt="member.title"
                 />
-                <h4 class="mb-1">{{ member.name }}</h4>
-                <div class="meta mb-2">{{ member.role }}</div>
+                <h4 class="mb-1">{{ member.title }}</h4>
+                <div class="meta mb-2">{{ member.description }}</div>
                 <p class="mb-2">{{ member.desc }}</p>
                 <nav class="nav social mb-0">
                   <a
@@ -97,8 +79,7 @@
                 Latest Projects
               </h2>
               <h3 class="display-3 mb-10">
-                Check out some of our awesome projects with creative ideas and
-                great design.
+                {{ dataProject?.title }}
               </h3>
             </div>
             <!-- /column -->
@@ -108,17 +89,13 @@
             <div ref="swiperRef" class="swiper overflow-visible">
               <div class="swiper-wrapper">
                 <div
-                  v-for="(project, index) in projects"
+                  v-for="(project, index) in dataProjects"
                   :key="index"
                   class="swiper-slide"
                 >
                   <figure class="rounded mb-7">
-                    <a :href="project.link">
-                      <img
-                        :src="project.img"
-                        :srcset="`${project.img2x} 2x`"
-                        alt=""
-                      />
+                    <a :href="project.link_url">
+                      <img :src="project.image_url" alt="" />
                     </a>
                   </figure>
                   <div
@@ -126,12 +103,12 @@
                   >
                     <div class="post-header">
                       <h2 class="post-title h3">
-                        <a :href="project.link" class="link-dark">{{
+                        <a :href="project.link_url" class="link-dark">{{
                           project.title
                         }}</a>
                       </h2>
                       <div class="post-category text-ash">
-                        {{ project.category }}
+                        {{ project.description }}
                       </div>
                     </div>
                   </div>
@@ -161,54 +138,31 @@
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { useHomepageStore } from "~/stores/useItemStore";
 
-const props = defineProps({
-  projects: {
-    type: Array,
-    default: () => [],
+const itemStore = useHomepageStore();
+const dataTeam = useState("dataTeam", () => []);
+const dataTeams = useState("dataTeams", () => []);
+const dataProject = useState("dataProject", () => []);
+const dataProjects = useState("dataProjects", () => []);
+
+const counters = [
+  {
+    icon: "uil uil-presentation-check",
+    value: "1000+",
+    label: "Completed Projects",
   },
-});
-
-const swiperRef = ref(null);
-let swiperInstance = null;
-
-onMounted(async () => {
-  // Chỉ khởi tạo Swiper ở client-side
-  if (process.client) {
-    await nextTick();
-
-    // Dynamic import Swiper để tránh SSR issues
-    const { Swiper } = await import("swiper");
-    const { Navigation } = await import("swiper/modules");
-
-    if (swiperRef.value) {
-      swiperInstance = new Swiper(swiperRef.value, {
-        modules: [Navigation],
-        slidesPerView: 1,
-        spaceBetween: 30,
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-          768: {
-            slidesPerView: 2,
-          },
-        },
-        // Các option bổ sung
-        loop: false,
-        grabCursor: true,
-        watchOverflow: true,
-      });
-    }
-  }
-});
-
-onUnmounted(() => {
-  if (swiperInstance) {
-    swiperInstance.destroy(true, true);
-  }
-});
+  {
+    icon: "uil uil-user-check",
+    value: "50K+",
+    label: "Happy Customers",
+  },
+  {
+    icon: "uil uil-trophy",
+    value: "20+",
+    label: "Awards Won",
+  },
+];
 
 const projects = [
   {
@@ -256,10 +210,6 @@ const projects = [
 ];
 const teamMembers = [
   {
-    name: "Coriss Ambady",
-    role: "Financial Analyst",
-    image: "/images/te1.jpg",
-    image2x: "/images/te1@2x.jpg",
     desc: "Fermentum massa justo sit amet risus morbi leo.",
     socials: [
       { icon: "uil uil-twitter", link: "#" },
@@ -268,10 +218,6 @@ const teamMembers = [
     ],
   },
   {
-    name: "Cory Zamora",
-    role: "Marketing Specialist",
-    image: "/images/te2.jpg",
-    image2x: "/images/te2@2x.jpg",
     desc: "Fermentum massa justo sit amet risus morbi leo.",
     socials: [
       { icon: "uil uil-twitter", link: "#" },
@@ -280,10 +226,6 @@ const teamMembers = [
     ],
   },
   {
-    name: "Nikolas Brooten",
-    role: "Sales Manager",
-    image: "/images/te3.jpg",
-    image2x: "/images/te3@2x.jpg",
     desc: "Fermentum massa justo sit amet risus morbi leo.",
     socials: [
       { icon: "uil uil-twitter", link: "#" },
@@ -292,10 +234,6 @@ const teamMembers = [
     ],
   },
   {
-    name: "Jackie Sanders",
-    role: "Investment Planner",
-    image: "/images/te4.jpg",
-    image2x: "/images/te4@2x.jpg",
     desc: "Fermentum massa justo sit amet risus morbi leo.",
     socials: [
       { icon: "uil uil-twitter", link: "#" },
@@ -304,6 +242,66 @@ const teamMembers = [
     ],
   },
 ];
+
+onMounted(async () => {
+  const team = await itemStore.fetchItem("homepage_sections", 8, true);
+  const teams = await itemStore.fetchItemsSection("homepage_items", 8);
+  const project = await itemStore.fetchItem("homepage_sections", 9, true);
+  const projects = await itemStore.fetchItemsSection("homepage_items", 9);
+  dataTeam.value = team;
+  dataTeams.value = teams.map((item, i) => {
+    return {
+      ...item,
+      ...teamMembers[i % teamMembers.length],
+    };
+  });
+  dataProject.value = project;
+  dataProjects.value = projects;
+});
+
+const props = defineProps({
+  projects: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const swiperRef = ref(null);
+let swiperInstance = null;
+
+onMounted(async () => {
+  if (process.client) {
+    await nextTick();
+    const { Swiper } = await import("swiper");
+    const { Navigation } = await import("swiper/modules");
+
+    if (swiperRef.value) {
+      swiperInstance = new Swiper(swiperRef.value, {
+        modules: [Navigation],
+        slidesPerView: 1,
+        spaceBetween: 30,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2,
+          },
+        },
+        loop: false,
+        grabCursor: true,
+        watchOverflow: true,
+      });
+    }
+  }
+});
+
+onUnmounted(() => {
+  if (swiperInstance) {
+    swiperInstance.destroy(true, true);
+  }
+});
 </script>
 <style scoped>
 .swiper-container {

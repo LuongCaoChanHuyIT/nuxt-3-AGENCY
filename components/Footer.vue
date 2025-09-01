@@ -19,8 +19,8 @@
             <div class="widget">
               <img
                 class="mb-4"
-                src="./assets/img/logo-light.png"
-                srcset="./assets/img/logo-light@2x.png 2x"
+                src="/images/logo-light.png"
+                srcset="/images/logo-light@2x.png 2x"
                 alt=""
               />
               <p class="mb-4">
